@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "899166768339",
+    "project_id": "kavish-academy",
+    "storage_bucket": "kavish-academy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899166768339:android:ae294c2bbb08c6bb425826",
+        "android_client_info": {
+          "package_name": "cruzer.blade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899166768339-1edrngjghqjecl314mklflacnk491mhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cruzer.blade",
+            "certificate_hash": "17755c894accd4bc25ad79200631a96ce08e5326"
+          }
+        },
+        {
+          "client_id": "899166768339-25ai6qri84ffte7dr9gsfluuco0a0jaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxjbQgkB31LcVwoGd6maS9nFCBaD3WKPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899166768339-25ai6qri84ffte7dr9gsfluuco0a0jaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
