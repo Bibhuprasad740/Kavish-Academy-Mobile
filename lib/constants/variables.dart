@@ -12,12 +12,13 @@ class Variables {
   // Theme -->
   // Dark Theme
   static ThemeData darkTheme = ThemeData(
+    scaffoldBackgroundColor: GlobalColors.accent4,
     primaryColor: GlobalColors.accent1,
     fontFamily: GoogleFonts.poppins().fontFamily,
     canvasColor: GlobalColors.darkBackgroundColor,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: GlobalColors.accent1,
-      secondary: GlobalColors.darkPrimaryColor,
+      primary: GlobalColors.darkPrimaryColor,
+      secondary: GlobalColors.accent2,
       brightness: Brightness.dark,
     ),
     appBarTheme: const AppBarTheme(
@@ -36,12 +37,13 @@ class Variables {
 
   // light Theme
   static ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: GlobalColors.accent2,
     primaryColor: GlobalColors.accent1,
     fontFamily: GoogleFonts.poppins().fontFamily,
     canvasColor: GlobalColors.lightBackgroundColor,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: GlobalColors.accent1,
-      secondary: GlobalColors.lightPrimaryColor,
+      primary: GlobalColors.lightPrimaryColor,
+      secondary: GlobalColors.accent4,
       brightness: Brightness.light,
     ),
     appBarTheme: const AppBarTheme(

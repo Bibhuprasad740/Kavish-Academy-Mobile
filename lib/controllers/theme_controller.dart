@@ -4,13 +4,20 @@ import '../constants/variables.dart';
 
 class ThemeController extends GetxController {
   static ThemeController instance = Get.find();
-  static Rx<ThemeData> currentTheme = Variables.lightTheme.obs;
+  static Rx<ThemeData> currentTheme =
+      Get.isDarkMode ? Variables.darkTheme.obs : Variables.lightTheme.obs;
 
   static void changeTheme() {
-    Get.changeTheme(
-        Get.isDarkMode ? Variables.lightTheme : Variables.darkTheme);
-    currentTheme.value = currentTheme.value == Variables.darkTheme
-        ? Variables.lightTheme
-        : Variables.darkTheme;
+    Get.changeThemeMode(
+      Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+    );
+    // currentTheme.value = currentTheme.value == Variables.darkTheme
+    //     ? Variables.lightTheme
+    //     : Variables.darkTheme;
+    currentTheme =
+        Get.isDarkMode ? Variables.lightTheme.obs : Variables.darkTheme.obs;
+    debugPrint(currentTheme.value == Variables.darkTheme
+        ? "ThemeController: Dark Theme"
+        : 'ThemeController: White theme');
   }
 }

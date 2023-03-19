@@ -39,12 +39,9 @@ class CustomButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  color:
-                      ThemeController.currentTheme.value == Variables.darkTheme
-                          ? GlobalColors.lightSecondaryColor
-                          : GlobalColors.darkSecondaryColor,
+                  color: GlobalColors.accent2,
                 ),
               ),
       ),

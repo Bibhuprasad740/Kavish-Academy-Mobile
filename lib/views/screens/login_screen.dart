@@ -23,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  // ThemeController themeController = ThemeController();
   void navigateToSignUpScreen() {
     Get.to(() => const SignupScreen());
   }
@@ -40,11 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Obx(
-      () => Container(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
+    return GetBuilder<ThemeController>(
+      builder: (themeController) => Scaffold(
+          body: Obx(
+        () => Container(
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,9 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     : 'assets/images/light_kavish_logo.png',
                 scale: 2,
               ),
+              const SizedBox(height: 20),
               Text(
                 'Welcome Back!',
                 style: GoogleFonts.lato(
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.5),
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
@@ -125,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: FontAwesomeIcons.facebook,
               ),
               const SizedBox(height: 20),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -161,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
-      ),
-    ));
+      )),
+    );
   }
 }
