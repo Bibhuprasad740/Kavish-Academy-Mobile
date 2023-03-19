@@ -28,7 +28,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
-      borderSide: Divider.createBorderSide(context),
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(
+        width: 0,
+        color: Colors.transparent,
+      ),
     );
     return TextFormField(
       textInputAction: widget.textInputAction,
@@ -58,7 +62,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: inputBorder,
         enabledBorder: inputBorder,
         filled: true,
-        contentPadding: const EdgeInsets.all(8),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
       ),
       keyboardType: widget.textInputType,
       obscureText: widget.isPassword ? isObscured : false,

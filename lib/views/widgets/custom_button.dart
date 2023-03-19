@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kavish_academy/constants/colors.dart';
+
+import '../../constants/variables.dart';
+import '../../controllers/theme_controller.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -23,10 +27,10 @@ class CustomButton extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
           horizontal: 12,
-          vertical: 15,
+          vertical: 10,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(20),
           color: GlobalColors.accent1,
         ),
         child: isLoading
@@ -35,7 +39,13 @@ class CustomButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 16,
+                  color:
+                      ThemeController.currentTheme.value == Variables.darkTheme
+                          ? GlobalColors.lightSecondaryColor
+                          : GlobalColors.darkSecondaryColor,
+                ),
               ),
       ),
     );

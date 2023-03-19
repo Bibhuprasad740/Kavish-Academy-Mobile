@@ -1,11 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kavish_academy/constants/variables.dart';
+import 'package:kavish_academy/controllers/theme_controller.dart';
 import 'package:kavish_academy/views/screens/signup_screen.dart';
+import 'package:kavish_academy/views/widgets/custom_icon_button.dart';
 
 import '../../constants/colors.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,9 +23,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   void navigateToSignUpScreen() {
-    Get.to(() => SignupScreen());
+    Get.to(() => const SignupScreen());
+  }
+
+  void loginUser() {
+    Get.offAll(() => const HomeScreen());
   }
 
   @override
@@ -32,18 +41,36 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+        body: Obx(
+      () => Container(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/images/kavish_logo.png', scale: 1.5),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CupertinoSwitch(
+                    applyTheme: true,
+                    value: ThemeController.currentTheme.value ==
+                        Variables.darkTheme,
+                    onChanged: (val) => ThemeController.changeTheme(),
+                  ),
+                ],
+              ),
+              Image.asset(
+                ThemeController.currentTheme.value == Variables.darkTheme
+                    ? 'assets/images/dark_kavish_logo.png'
+                    : 'assets/images/light_kavish_logo.png',
+                scale: 2,
+              ),
               Text(
                 'Welcome Back!',
                 style: GoogleFonts.lato(
-                  color: GlobalColors.accent2.withOpacity(0.5),
-                  fontSize: 30,
+                  fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -64,12 +91,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPassword: true,
                 hintText: 'Password',
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Forgot password ? ',
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: GlobalColors.accent1,
+                    ),
+                  )
+                ],
+              ),
               CustomButton(
-                onTap: () {},
+                onTap: loginUser,
                 isLoading: false,
                 text: 'Login!',
               ),
+              const SizedBox(height: 20),
+              CustomIconButton(
+                onTap: () {},
+                color: Colors.red,
+                text: 'Sign in with Google',
+                icon: FontAwesomeIcons.google,
+              ),
+              const SizedBox(height: 20),
+              CustomIconButton(
+                onTap: () {},
+                color: Colors.blue,
+                text: 'Sign in with Facebook',
+                icon: FontAwesomeIcons.facebook,
+              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -81,29 +136,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: const EdgeInsets.symmetric(vertical: 7),
                     child: const Text(
                       'Don\'t have an account?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                   ),
                   Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 1,
-                      ),
-                      margin: const EdgeInsets.symmetric(vertical: 7),
-                      child: InkWell(
-                        onTap: navigateToSignUpScreen,
-                        child: const Text(
-                          ' Sign Up!',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: GlobalColors.accent1,
-                            fontWeight: FontWeight.w900,
-                          ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 1,
+                    ),
+                    margin: const EdgeInsets.symmetric(vertical: 7),
+                    child: InkWell(
+                      onTap: navigateToSignUpScreen,
+                      child: const Text(
+                        ' Sign Up!',
+                        style: TextStyle(
+                          color: GlobalColors.accent1,
+                          fontWeight: FontWeight.w900,
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -111,6 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kavish_academy/constants/colors.dart';
-import 'package:kavish_academy/views/screens/login_screen.dart';
-import 'package:kavish_academy/views/screens/signup_screen.dart';
+import 'package:kavish_academy/constants/variables.dart';
+import 'package:kavish_academy/controllers/theme_controller.dart';
+import 'package:kavish_academy/initial_bindings.dart';
 import 'package:kavish_academy/views/screens/splash_screen.dart';
 
 void main() async {
@@ -20,13 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: GlobalColors.backgroundColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // useMaterial3: true,
-      ),
-      home: LoginScreen(),
+      initialBinding: InitialBinding(),
+      title: 'Kavish Academy',
+      theme: Variables.lightTheme,
+      darkTheme: Variables.darkTheme,
+      home: const SplashScreen(),
     );
   }
 }
