@@ -11,9 +11,6 @@ class ThemeController extends GetxController {
     Get.changeThemeMode(
       Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
     );
-    // currentTheme.value = currentTheme.value == Variables.darkTheme
-    //     ? Variables.lightTheme
-    //     : Variables.darkTheme;
     currentTheme =
         Get.isDarkMode ? Variables.lightTheme.obs : Variables.darkTheme.obs;
     debugPrint(currentTheme.value == Variables.darkTheme

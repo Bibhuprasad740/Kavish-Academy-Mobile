@@ -64,9 +64,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         filled: true,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 10,
+          vertical: 12,
         ),
       ),
+      validator: (value) {
+        if (value == null || value == '') {
+          return 'Please enter ${widget.hintText}';
+        }
+        return null;
+      },
       keyboardType: widget.textInputType,
       obscureText: widget.isPassword ? isObscured : false,
     );

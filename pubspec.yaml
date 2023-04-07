@@ -33,11 +33,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
+  firebase_database: ^10.1.0
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.4.0
   get: ^4.6.5
   google_fonts: ^4.0.3
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -66,12 +68,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Signatra
+      fonts:
+        - asset: assets/fonts/Signatra.ttf
+    - family: Brand-Regular
+      fonts:
+        - asset: assets/fonts/bolt-regular.ttf
+    - family: Brand-Bold
+      fonts:
+        - asset: assets/fonts/bolt-semibold.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

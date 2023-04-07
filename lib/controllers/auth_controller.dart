@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 
 import '../constants/variables.dart';
 import '../views/screens/splash_screen.dart';
@@ -26,7 +27,22 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const SplashScreen());
     } else {
-      Get.offAll(() => Container());
+      Get.offAll(() => const BottomBarScreen());
     }
+  }
+
+  static Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    Get.offAll(() => const BottomBarScreen());
+  }
+
+  static Future<void> logIn({
+    required String email,
+    required String password,
+  }) async {
+    Get.offAll(() => const BottomBarScreen());
   }
 }

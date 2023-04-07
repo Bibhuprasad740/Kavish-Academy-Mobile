@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kavish_academy/constants/variables.dart';
 import 'package:kavish_academy/views/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,11 +22,13 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 1),
     );
     _controller.forward();
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Get.off(() => const LoginScreen());
-      }
-    });
+    _controller.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          Get.off(() => const LoginScreen());
+        }
+      },
+    );
   }
 
   @override
@@ -36,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
           Get.isDarkMode
               ? 'assets/images/dark_kavish_logo.png'
               : 'assets/images/light_kavish_logo.png',
-          scale: 1.7,
+          scale: Variables.imageScale,
         ),
       ),
     );

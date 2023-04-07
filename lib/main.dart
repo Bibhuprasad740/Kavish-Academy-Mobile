@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kavish_academy/constants/variables.dart';
-import 'package:kavish_academy/controllers/theme_controller.dart';
 import 'package:kavish_academy/initial_bindings.dart';
 import 'package:kavish_academy/views/screens/splash_screen.dart';
 
@@ -15,7 +14,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -24,6 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Kavish Academy',
       theme: Variables.lightTheme,
       darkTheme: Variables.darkTheme,
+      // debugShowMaterialGrid: true,
       home: const SplashScreen(),
     );
   }

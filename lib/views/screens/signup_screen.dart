@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kavish_academy/constants/colors.dart';
+import 'package:kavish_academy/controllers/auth_controller.dart';
+import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 import 'package:kavish_academy/views/widgets/custom_button.dart';
 import 'package:kavish_academy/views/widgets/custom_textfield.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/variables.dart';
 import '../../controllers/theme_controller.dart';
-import 'home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -28,8 +29,16 @@ class _SignupScreenState extends State<SignupScreen> {
     Get.back();
   }
 
-  void signUpUser() {
-    Get.offAll(() => const HomeScreen());
+  void signUpUser() async {
+    if (_passwordController.text.isNotEmpty &&
+        _passwordController.text.trim() ==
+            _confirmPasswordController.text.trim()) {
+      await AuthController.signUp(
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    }
   }
 
   @override
@@ -67,9 +76,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ThemeController.currentTheme.value == Variables.darkTheme
                     ? 'assets/images/dark_kavish_logo.png'
                     : 'assets/images/light_kavish_logo.png',
-                scale: 2,
+                scale: Variables.imageScale,
+                color: GlobalColors.accent1,
               ),
-              const SizedBox(height: 20),
+              const Spacer(),
               Text(
                 'Create an account',
                 style: GoogleFonts.lato(
@@ -119,43 +129,39 @@ class _SignupScreenState extends State<SignupScreen> {
                 isLoading: false,
                 text: 'Get Started!',
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 1,
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: 7),
-                    child: const Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Container(
+              const Spacer(flex: 10),
+              InkWell(
+                onTap: navigateToLoginScreen,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
                         horizontal: 1,
                       ),
                       margin: const EdgeInsets.symmetric(vertical: 7),
-                      child: InkWell(
-                        onTap: navigateToLoginScreen,
-                        child: const Text(
-                          ' Login',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: GlobalColors.accent1,
-                            fontWeight: FontWeight.w900,
-                          ),
+                      child: const Text(
+                        'Already have an account?',
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 1,
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 7),
+                      child: const Text(
+                        ' Login',
+                        style: TextStyle(
+                          color: GlobalColors.accent1,
+                          fontWeight: FontWeight.bold,
                         ),
-                      )),
-                  const SizedBox(height: 20),
-                ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ],
           ),
