@@ -30,15 +30,21 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signUpUser() async {
+    setState(() {});
     if (_passwordController.text.isNotEmpty &&
         _passwordController.text.trim() ==
             _confirmPasswordController.text.trim()) {
-      await AuthController.signUp(
+      await AuthController.instance.signUp(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
+        context: context,
       );
+    } else {
+      Get.snackbar('Please enter password!',
+          'Password should be at least 6 characters long.');
     }
+    setState(() {});
   }
 
   @override
@@ -125,8 +131,8 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 20),
               CustomButton(
+                isLoading: AuthController.instance.isLoading.value,
                 onTap: signUpUser,
-                isLoading: false,
                 text: 'Get Started!',
               ),
               const Spacer(flex: 10),

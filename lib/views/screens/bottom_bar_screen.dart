@@ -12,7 +12,10 @@ class BottomBarScreen extends StatefulWidget {
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
   List<Widget> screens = [
-    const HomeScreen(),
+    HomeScreen(),
+    const Center(
+      child: Text('History Screen'),
+    ),
     const ProfileScreen(),
   ];
   int selectedIndex = 0;
@@ -61,6 +64,23 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 border: Border(
                   bottom: BorderSide(
                     color: selectedIndex == 1
+                        ? GlobalColors.selectedNavBarColor
+                        : Theme.of(context).canvasColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(Icons.receipt_long),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: selectedIndex == 2
                         ? GlobalColors.selectedNavBarColor
                         : Theme.of(context).canvasColor,
                     width: bottomBarBorderWidth,

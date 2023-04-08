@@ -1,14 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'colors.dart';
 
 class Variables {
   static var auth = FirebaseAuth.instance;
   static var firestore = FirebaseFirestore.instance;
+  static var firebaseDatabase = FirebaseDatabase.instance;
+
   static const imageScale = 6.0;
+  static const googleMapApiKey = "AIzaSyABvcmeTugkWECyaqcgbyGJWwJeHNAgu0Q";
+  static const initialCam = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 18,
+  );
 
   // Theme -->
   // Dark Theme

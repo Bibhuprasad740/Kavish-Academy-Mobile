@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kavish_academy/constants/variables.dart';
+import 'package:kavish_academy/controllers/auth_controller.dart';
+import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 import 'package:kavish_academy/views/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +27,11 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.addStatusListener(
       (status) {
         if (status == AnimationStatus.completed) {
-          Get.off(() => const LoginScreen());
+          Get.off(
+            () => Variables.auth.currentUser == null
+                ? const LoginScreen()
+                : const BottomBarScreen(),
+          );
         }
       },
     );

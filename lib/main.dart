@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
       title: 'Kavish Academy',
       theme: Variables.lightTheme,
       darkTheme: Variables.darkTheme,
-      // debugShowMaterialGrid: true,
       home: const SplashScreen(),
     );
   }
