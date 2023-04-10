@@ -44,7 +44,7 @@ dependencies:
   get: ^4.6.5
   google_fonts: ^4.0.3
   google_maps_flutter: ^2.2.5
-  # location: ^4.4.0
+  loading_indicator: ^3.1.0
   youtube_player_flutter: ^8.1.2
 
 dev_dependencies:

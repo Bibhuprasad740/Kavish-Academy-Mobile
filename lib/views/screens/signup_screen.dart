@@ -98,7 +98,6 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 20),
               CustomTextField(
                 textEditingController: _nameController,
-                onChanged: () {},
                 textInputAction: TextInputAction.next,
                 textInputType: TextInputType.name,
                 hintText: 'Name',
@@ -106,7 +105,6 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 20),
               CustomTextField(
                 textEditingController: _emailController,
-                onChanged: () {},
                 textInputAction: TextInputAction.next,
                 textInputType: TextInputType.name,
                 hintText: 'Email',
@@ -114,7 +112,6 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 20),
               CustomTextField(
                 textEditingController: _passwordController,
-                onChanged: () {},
                 textInputAction: TextInputAction.next,
                 textInputType: TextInputType.name,
                 isPassword: true,
@@ -123,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 20),
               CustomTextField(
                 textEditingController: _confirmPasswordController,
-                onChanged: () {},
+                onSubmitted: signUpUser,
                 textInputAction: TextInputAction.done,
                 textInputType: TextInputType.name,
                 isPassword: true,

@@ -7,7 +7,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextInputType textInputType;
   final TextInputAction textInputAction;
-  final Function? onChanged;
+  final VoidCallback? onSubmitted;
   const CustomTextField({
     Key? key,
     required this.textEditingController,
@@ -15,7 +15,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
-    this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
@@ -72,6 +72,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return 'Please enter ${widget.hintText}';
         }
         return null;
+      },
+      onFieldSubmitted: (val) {
+        if (widget.onSubmitted != null) {
+          widget.onSubmitted!();
+        }
       },
       keyboardType: widget.textInputType,
       obscureText: widget.isPassword ? isObscured : false,

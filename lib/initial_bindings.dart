@@ -3,6 +3,7 @@ import 'package:kavish_academy/controllers/firebase_storage_controller.dart';
 import 'package:kavish_academy/controllers/theme_controller.dart';
 
 import 'controllers/auth_controller.dart';
+import 'controllers/map_controller.dart';
 
 class InitialBinding extends Bindings {
   @override
@@ -17,6 +18,10 @@ class InitialBinding extends Bindings {
     );
     Get.lazyPut<FirebaseStorageController>(
       () => FirebaseStorageController(),
+      fenix: true,
+    );
+    Get.lazyPut<MapController>(
+      () => MapController(),
       fenix: true,
     );
   }

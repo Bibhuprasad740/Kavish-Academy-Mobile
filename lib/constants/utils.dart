@@ -19,13 +19,13 @@ class Utils {
     LocationPermission isPermissionAllowed = await Geolocator.checkPermission();
     if (isPermissionAllowed != LocationPermission.denied) {
       position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.bestForNavigation);
+          desiredAccuracy: LocationAccuracy.high);
     } else {
       Geolocator.requestPermission();
       isPermissionAllowed = await Geolocator.checkPermission();
       if (isPermissionAllowed != LocationPermission.denied) {
         position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.bestForNavigation);
+            desiredAccuracy: LocationAccuracy.high);
       }
     }
     return position;

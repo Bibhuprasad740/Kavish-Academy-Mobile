@@ -19,12 +19,19 @@ class AuthController extends GetxController {
   late Rx<User?> _user;
   Rx<bool> isLoading = false.obs;
 
+  @override
+  void onInit() {
+    _user = Rx<User?>(Variables.auth.currentUser);
+    _user.bindStream(Variables.auth.authStateChanges());
+    super.onInit();
+  }
+
   // @override
   // void onReady() {
   //   super.onReady();
   //   _user = Rx<User?>(Variables.auth.currentUser);
   //   _user.bindStream(Variables.auth.authStateChanges());
-  //   ever(_user, _setInitialScreen);
+  //   // ever(_user, _setInitialScreen);
   // }
 
   // _setInitialScreen(User? user) {
@@ -55,6 +62,7 @@ class AuthController extends GetxController {
         ).then((value) {
           _user.value = Variables.auth.currentUser;
         });
+        _user.value = Variables.auth.currentUser;
         Utils.showToast(context: context, message: 'Account has been created!');
         Get.offAll(() => const BottomBarScreen());
       } else {
@@ -109,6 +117,7 @@ class AuthController extends GetxController {
       } else {
         result = exception.code;
       }
+      _user.value = Variables.auth.currentUser;
       Get.snackbar(result, 'Please try again.');
     } catch (e) {
       Utils.showToast(context: context, message: 'Something went wrong!');
@@ -121,6 +130,7 @@ class AuthController extends GetxController {
     try {
       await Variables.auth.signOut();
       Get.offAll(() => const SplashScreen());
+      _user.value = null;
     } catch (e) {
       debugPrint('Catch block in AuthController.signOut(), ${e.toString()}');
     }
