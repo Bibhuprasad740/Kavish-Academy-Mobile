@@ -63,6 +63,7 @@ class AuthController extends GetxController {
           _user.value = Variables.auth.currentUser;
         });
         _user.value = Variables.auth.currentUser;
+        await FirebaseStorageController().setUserData();
         Utils.showToast(context: context, message: 'Account has been created!');
         Get.offAll(() => const BottomBarScreen());
       } else {
@@ -118,6 +119,7 @@ class AuthController extends GetxController {
         result = exception.code;
       }
       _user.value = Variables.auth.currentUser;
+      await FirebaseStorageController().setUserData();
       Get.snackbar(result, 'Please try again.');
     } catch (e) {
       Utils.showToast(context: context, message: 'Something went wrong!');

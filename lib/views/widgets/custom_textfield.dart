@@ -8,6 +8,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType textInputType;
   final TextInputAction textInputAction;
   final VoidCallback? onSubmitted;
+  final Function? onChanged;
   const CustomTextField({
     Key? key,
     required this.textEditingController,
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.onSubmitted,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       ),
     );
     return TextFormField(
+      onChanged: (value) => widget.onChanged!(value),
       textInputAction: widget.textInputAction,
       minLines: 1,
       maxLines: widget.isPassword ? 1 : 8,

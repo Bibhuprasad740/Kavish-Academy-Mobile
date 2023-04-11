@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kavish_academy/controllers/firebase_storage_controller.dart';
+import 'package:kavish_academy/models/address_model.dart';
 
 import '../constants/utils.dart';
 import '../constants/variables.dart';
@@ -46,7 +47,6 @@ class MapController extends GetxController {
       await _mapController!.animateCamera(
         CameraUpdate.newCameraPosition(currentPosition.value),
       );
-      print('the adddress is --> ${address.first}');
     } catch (e) {
       Get.snackbar(
           'Something went wrong!', 'Please try again after some time!');
@@ -72,7 +72,37 @@ class MapController extends GetxController {
       Utils.showToast(
           context: context, message: 'Satelite view is only for Plus Members!');
     }
-    // print(isPlusMember);
     isLoading.value = false;
+  }
+
+  Future<AddressModel?> searchResults(String address) async {
+    AddressModel? foundAddress;
+    if (address.length > 1) {
+      try {
+        var fetchedData = await geoCodingPlatform.locationFromAddress(
+          address,
+          localeIdentifier: 'en_IN',
+        );
+        var result = await geoCodingPlatform.placemarkFromCoordinates(
+          fetchedData[0].latitude,
+          fetchedData[0].longitude,
+        );
+        if (result.isNotEmpty) {
+          foundAddress = AddressModel(
+            name: result[0].locality!,
+            countryCode: result[0].isoCountryCode!,
+            state: result[0].administrativeArea!,
+            street: result[0].street!,
+            postalcode: result[0].postalCode!,
+            latitude: fetchedData[0].latitude,
+            longitude: fetchedData[0].longitude,
+            timestamp: fetchedData[0].timestamp,
+          );
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+    return foundAddress;
   }
 }

@@ -7,11 +7,16 @@ import 'package:kavish_academy/models/user_model.dart';
 class FirebaseStorageController extends GetxController {
   static FirebaseStorageController instance = Get.find();
 
-  var firebaseRealTimeUserData = {
-    'name': 'Default',
-    'email': 'example@gmail.com',
-    'uid': 'jvnhgewcjlmglmxesmcvox',
-  }.obs;
+  Rx<UserModel> firebaseUserData = UserModel(
+    name: 'Default',
+    email: 'example@gmail.com',
+    uid: 'abcdefghijk',
+    isPlusMember: false,
+  ).obs;
+
+  Rx<bool> isLoading = false.obs;
+
+  UserModel get getUserModel => firebaseUserData.value;
 
   static Future<void> storeUserDataToStorage({
     required String uid,
@@ -24,6 +29,7 @@ class FirebaseStorageController extends GetxController {
       UserModel userModel = UserModel(
         name: name,
         email: email,
+        uid: uid,
         isPlusMember: false,
       );
       await userRef.child(uid).set(userModel.toJson());
@@ -33,14 +39,22 @@ class FirebaseStorageController extends GetxController {
     }
   }
 
-  static Future getUserData() async {
+  Future<void> setUserData() async {
+    isLoading.value = true;
     try {
       DatabaseReference userRef =
           Variables.firebaseDatabase.ref().child('users');
       DataSnapshot dataSnapshot =
           await userRef.child(Variables.auth.currentUser!.uid).get();
-      var firebaseRealTimeUserData = dataSnapshot.value as dynamic;
-    } catch (e) {}
+      var fetchedUserData = dataSnapshot.value as dynamic;
+      UserModel userModel = UserModel.fromMap(fetchedUserData);
+      firebaseUserData.value = userModel;
+    } catch (e) {
+      debugPrint(
+        'Catch block in firebaseStorageController.setUserData(), ${e.toString()}',
+      );
+    }
+    isLoading.value = false;
   }
 
   Future<bool> checkPlusMember() async {

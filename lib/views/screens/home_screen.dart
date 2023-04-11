@@ -1,9 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:kavish_academy/controllers/auth_controller.dart';
+import 'package:kavish_academy/constants/utils.dart';
+import 'package:kavish_academy/constants/variables.dart';
 import 'package:kavish_academy/controllers/map_controller.dart';
+import 'package:kavish_academy/models/address_model.dart';
+import 'package:kavish_academy/views/widgets/address_tile.dart';
 import 'package:kavish_academy/views/widgets/custom_textfield.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -19,7 +21,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _desinationLocationController =
       TextEditingController();
-  final mapController = MapController.instance;
+  GoogleMapController? newController;
+  AddressModel? searchResult;
 
   @override
   void dispose() {
@@ -29,32 +32,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    addData();
     super.initState();
+    addData();
   }
 
-  Future<void> addData() async {
-    await MapController().getCurrentLocation().then((value) {
-      setState(() {});
-    });
+  addData() async {
+    await Variables.fbsController.setUserData();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    User? user = AuthController.instance.getUser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Obx(
         () => Stack(
           children: [
-            MapController().isLoading.value
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
+            Variables.mapController.isLoading.value
+                ? const LoadingIndicator(indicatorType: Indicator.ballPulse)
                 : GoogleMap(
                     buildingsEnabled: true,
                     myLocationEnabled: true,
-                    mapType: mapController.mapType.value,
+                    mapType: Variables.mapController.mapType.value,
                     trafficEnabled: true,
                     zoomControlsEnabled: true,
                     zoomGesturesEnabled: true,
@@ -62,10 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottom: size.height * 0.4,
                       top: 20,
                     ),
-                    initialCameraPosition: mapController.currentPosition.value,
+                    initialCameraPosition:
+                        Variables.mapController.currentPosition.value,
                     onMapCreated: (GoogleMapController controller) async {
-                      mapController.googleMapController.complete(controller);
-                      await mapController.getCurrentLocation();
+                      Variables.mapController.googleMapController
+                          .complete(controller);
+                      newController = controller;
+                      await Variables.mapController.getCurrentLocation();
+                      // await Variables.mapController.changeMapTheme();
+                      await Variables.fbsController.setUserData();
                       setState(() {});
                     },
                     markers: {
@@ -82,7 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
             //     alignment: Alignment.center,
             //     height: size.height,
             //     width: double.infinity,
-            //     child: Text('Hi ${user!.uid}'),
+            //     child: FirebaseStorageController().isLoading.value
+            //         ? CircularProgressIndicator()
+            //         : Text(
+            //             'Hi ${Variables.fbsController.firebaseUserData.value.name}'),
             //   ),
             Positioned(
               left: 0,
@@ -111,9 +118,30 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Hi There!',
-                              style: TextStyle(fontSize: 15),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Hi ',
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: Variables.fbsController
+                                        .firebaseUserData.value.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 18,
+                                      color: GlobalColors.accent1,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             Column(
                               children: [
@@ -124,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(50)),
                                   child: IconButton(
                                     onPressed: () async {
-                                      await mapController
+                                      await Variables.mapController
                                           .changeMapType(context);
                                       setState(() {});
                                     },
@@ -145,11 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               TextStyle(fontSize: 20, fontFamily: "Brand-Bold"),
                         ),
                         const SizedBox(height: 20),
-                        mapController.isLoading.value == true
-                            ? Center(
+                        Variables.mapController.isLoading.value == true
+                            ? const Center(
                                 child: SizedBox(
                                   height: 30,
-                                  child: const LoadingIndicator(
+                                  child: LoadingIndicator(
                                     indicatorType: Indicator.ballPulse,
                                   ),
                                 ),
@@ -170,7 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: mapController.userAddress.value,
+                                          text: Variables
+                                              .mapController.userAddress.value,
                                           style: const TextStyle(
                                               color: GlobalColors.accent1,
                                               fontWeight: FontWeight.bold,
@@ -184,9 +213,29 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                         const SizedBox(height: 20),
                         CustomTextField(
+                          onChanged: (value) async {
+                            searchResult = await Variables.mapController
+                                .searchResults(value);
+                            setState(() {});
+                          },
                           textEditingController: _desinationLocationController,
                           hintText: 'Where you want to go?',
                         ),
+                        searchResult == null
+                            ? Container()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) => AddressTile(
+                                  address: searchResult!,
+                                  onTap: () {
+                                    Utils.showToast(
+                                      context: context,
+                                      message: 'Booyoo!!',
+                                    );
+                                  },
+                                ),
+                                itemCount: 1,
+                              ),
                       ],
                     ),
                   ),

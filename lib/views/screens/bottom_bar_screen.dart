@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kavish_academy/constants/colors.dart';
+import 'package:kavish_academy/constants/variables.dart';
 import 'package:kavish_academy/views/screens/home_screen.dart';
 import 'package:kavish_academy/views/screens/profile_screen.dart';
+
+import '../../controllers/firebase_storage_controller.dart';
+import '../../controllers/map_controller.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({Key? key}) : super(key: key);
@@ -25,6 +29,18 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   void updatePage(int page) {
     setState(() {
       selectedIndex = page;
+    });
+  }
+
+  @override
+  void initState() {
+    addData();
+    super.initState();
+  }
+
+  addData() async {
+    await MapController().getCurrentLocation().then((value) {
+      setState(() {});
     });
   }
 
