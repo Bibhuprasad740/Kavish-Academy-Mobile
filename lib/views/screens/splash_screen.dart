@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kavish_academy/constants/variables.dart';
-import 'package:kavish_academy/controllers/auth_controller.dart';
 import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 import 'package:kavish_academy/views/screens/login_screen.dart';
 

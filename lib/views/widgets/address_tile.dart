@@ -29,7 +29,7 @@ class AddressTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    address.name,
+                    '${address.name}, ${address.locality}',
                     style: TextStyle(
                       fontFamily: 'Brand-Bold',
                       fontSize: 18,

@@ -7,7 +7,6 @@ import 'package:kavish_academy/constants/utils.dart';
 import 'package:kavish_academy/constants/variables.dart';
 import 'package:kavish_academy/controllers/auth_controller.dart';
 import 'package:kavish_academy/controllers/theme_controller.dart';
-import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 import 'package:kavish_academy/views/screens/signup_screen.dart';
 import 'package:kavish_academy/views/widgets/custom_icon_button.dart';
 

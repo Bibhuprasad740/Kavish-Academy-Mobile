@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class AddressModel {
   double latitude, longitude;
   DateTime timestamp;
-  String name, countryCode, street, postalcode, state;
+  String name, countryCode, street, postalcode, state, locality;
   AddressModel({
     required this.name,
+    required this.locality,
     required this.countryCode,
     required this.state,
     required this.street,
@@ -24,6 +23,7 @@ class AddressModel {
         'state': state,
         'street': street,
         'postalcode': postalcode,
+        'locality': locality,
       };
   static AddressModel fromMap(dynamic userMap) {
     return AddressModel(
@@ -32,6 +32,7 @@ class AddressModel {
       state: userMap['state'],
       street: userMap['street'],
       postalcode: userMap['postalcode'],
+      locality: userMap['locality'],
       latitude: userMap['latitude'],
       longitude: userMap['longitude'],
       timestamp: userMap['timestamp'],

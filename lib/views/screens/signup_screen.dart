@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kavish_academy/constants/colors.dart';
 import 'package:kavish_academy/controllers/auth_controller.dart';
-import 'package:kavish_academy/views/screens/bottom_bar_screen.dart';
 import 'package:kavish_academy/views/widgets/custom_button.dart';
 import 'package:kavish_academy/views/widgets/custom_textfield.dart';
 import 'package:google_fonts/google_fonts.dart';
